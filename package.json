@@ -1,0 +1,23 @@
+{
+  "name": "dj-pomodoro",
+  "version": "1.0.0",
+  "description": "Pomodoro Timer",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurodm/dj-pomodoro.git"
+  },
+  "keywords": [
+    "pomodoro",
+    "timer"
+  ],
+  "author": "Lauro Damasceno",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurodm/dj-pomodoro/issues"
+  },
+  "homepage": "https://github.com/laurodm/dj-pomodoro#readme"
+}
