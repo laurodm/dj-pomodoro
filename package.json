@@ -4,6 +4,7 @@
   "description": "Pomodoro Timer",
   "main": "index.js",
   "scripts": {
+    "server": "http-server",
     "test": "jest"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/laurodm/dj-pomodoro/issues"
   },
-  "homepage": "https://github.com/laurodm/dj-pomodoro#readme"
+  "homepage": "https://github.com/laurodm/dj-pomodoro#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
 }
