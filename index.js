@@ -1,11 +1,13 @@
-const currentPomodoro = { m: 0, s: 5 }
-let pointer = null
-const pomodoro = [
-    { m: 0, s: 5 },
-    { m: 0, s: 3 }
-]
-
 let timeLoop = null
+let pointer = 0
+let status = 'stop'
+let audio = new Audio('bell.mp3');
+const times = [
+    { m: 0, s: 5, name: 'Work' },
+    { m: 0, s: 3, name: 'Interval' }
+]
+let currentPomodoro = { ...times[pointer] }
+
 
 function setClockValue () {
     const { m, s } = currentPomodoro
@@ -14,21 +16,47 @@ function setClockValue () {
 }
 
 function startClock () {
-    timeLoop = setInterval(function () {
-        timeCount()
-        setClockValue()
-    }, 1000)
+    if (['stop', 'paused'].includes(status)) {
+        setTimeName()
+        status = 'plaing'
+        timeLoop = setInterval(function () {
+            timeCount()
+            setClockValue()
+        }, 1000)
+    }
 }
 
 function stopClock () {
+    status = 'stop'
     clearInterval(timeLoop)
-    currentPomodoro.m = 0
-    currentPomodoro.s = 5
+    pointer = 0
+    currentPomodoro = { ...times[pointer] }
+    setTimeName()
     setClockValue()
 }
 
 function pauseClock () {
+    status = 'paused'
     clearInterval(timeLoop)
+}
+
+function nextTime () {
+    status = 'stop'
+    clearInterval(timeLoop)
+    if (pointer + 1 < times.length) {
+        pointer++
+    } else {
+        stopClock()
+        return
+    }
+    currentPomodoro = { ...times[pointer] }
+    setClockValue()
+    startClock()
+}
+
+function setTimeName () {
+    const timeName = document.querySelector('.timeName')
+    timeName.textContent = currentPomodoro.name
 }
 
 function timeCount () {
@@ -36,6 +64,7 @@ function timeCount () {
 
     if (m == 0 && s == 0) {
         clearInterval(timeLoop)
+        audio.play();
     } else if (m > 0 && s === 0) {
         m -= 1
     } else if (m !== 0 && s === 0) {
@@ -71,10 +100,15 @@ function setControllsEvents () {
     stopBtn.addEventListener('click', () => {
         stopClock()
     })
+
+    nextBtn.addEventListener('click', () => {
+        nextTime()
+    })
 }
 
 
 window.onload = function () {
+    setTimeName()
     setClockValue()
     setControllsEvents()
 }
